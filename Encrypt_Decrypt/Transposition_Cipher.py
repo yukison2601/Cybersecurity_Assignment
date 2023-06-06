@@ -96,9 +96,9 @@ def decryptMessage(cipher):
 # Driver Code
 msg = "Hello World!"
 print("Original Test: {}".format(msg))
+
 cipher = encryptMessage(msg)
 print("Encrypted Message: {}".format(cipher))
   
 print("Decryped Message: {}".format(decryptMessage(cipher)))
   
-# This code is contributed by Aditya K
