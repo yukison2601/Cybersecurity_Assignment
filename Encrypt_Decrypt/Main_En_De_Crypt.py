@@ -1,8 +1,46 @@
-# Python3 implementation of 
-# Columnar Transposition
 import math
-  
-# Encryption
+
+# Caeser Encrypt
+def caesar_cipher(text, shift, space_char, non_alpha_char):
+    result = ""
+
+    for char in text:
+        if char.isalpha():
+            if char.isupper():
+                result += chr((ord(char) - 65 + int(shift)) % 26 + 65)
+            else:
+                result += chr((ord(char) - 97 + int(shift)) % 26 + 97)
+        elif char.isdigit():
+            new_digit = (int(char) + shift) % 10
+            result += str(new_digit)
+        elif char.isspace():
+            result += space_char
+        else:
+            result += non_alpha_char
+
+    return result
+
+# Caeser Decrypt
+def reverse_caesar_cipher(text, shift, space_char, non_alpha_char, blank_space):
+    result = ""
+
+    for char in text:
+        if char.isalpha():
+            if char.isupper():
+                result += chr((ord(char) - 65 + int(shift)) % 26 + 65)
+            else:
+                result += chr((ord(char) - 97 + int(shift)) % 26 + 97)
+        elif char.isdigit():
+            new_digit = (int(char) + shift) % 10
+            result += str(new_digit)
+        elif char == non_alpha_char:
+            result += space_char
+        elif char == space_char:
+            result += blank_space
+
+    return result
+
+# Transposition Encrypt
 def encryptMessage(msg):
     cipher = ""
   
@@ -37,8 +75,8 @@ def encryptMessage(msg):
         k_indx += 1
   
     return cipher
-  
-# Decryption
+
+# Transposition Decrypt
 def decryptMessage(cipher):
     msg = ""
   
@@ -90,19 +128,29 @@ def decryptMessage(cipher):
         return msg[: -null_count]
   
     return msg
-  
+
 # Driver Code
+space_char = "-"
+non_alpha_char = "?"
+blank_space = " "
+
 print("Enter your message:")   
 msg = input()
+
+print("Enter number of shift:")
+shift = input()
 
 print("Enter your key:")
 key = input()
 
 print("Original Test: {}".format(msg))
 
-cipher = encryptMessage(msg)
+encrypted_text = encryptMessage(caesar_cipher(msg, shift, space_char, non_alpha_char))
 
-print("Encrypted Message: {}".format(cipher))
-  
-print("Decryped Message: {}".format(decryptMessage(cipher)))
-  
+
+print("Encrypted Message: {}".format((encrypted_text)))
+
+decrypted_text = reverse_caesar_cipher(decryptMessage(encrypted_text), -int(shift), space_char, non_alpha_char, blank_space)
+
+print("Decryped Message: {}".format((decrypted_text)))
+
